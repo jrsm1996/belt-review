@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Most Popular Secrets</title>
+    </head>
+    <body>
+        <h1>Most Popular Secrets...</h1>
+        <a href="/secrets">Go Back</a>
+        {% for secret in secrets %}
+            <p>
+                {{ secret.content }} ({{ secret.created_at }}) {{ secret.liked_by.all|length }} likes.
+                {% if secret.user == current_user %}
+                    <a href="/delete/{{ secret.id }}">Delete</a>
+                {% else %}
+                    {% if user in secret.liked_by.all %}
+                        <a href="/unlike/{{ secret.id }}">Unlike</a>
+                    {% else %}
+                        <a href="/like/{{ secret.id }}">Like</a>
+                    {% endif %}
+                {% endif %}
+            </p>
+        {% endfor %}
+    </body>
+</html>
